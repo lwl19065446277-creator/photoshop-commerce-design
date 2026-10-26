@@ -1,0 +1,570 @@
+{
+  "snapshotDate": "2026-10-26",
+  "sourceProject": "Design Agent Studio",
+  "files": [
+    {
+      "path": "src/cli.ts",
+      "sha256": "3277962f233081632fbc2c139d4306d1f601ddb15a0c27db3fcfeb0e994020d8"
+    },
+    {
+      "path": "src/client.ts",
+      "sha256": "262af199bb1d7ea37fe719c6311e23feb08ccd062e76708fe8272bbfe10bf0f2"
+    },
+    {
+      "path": "src/config.ts",
+      "sha256": "fe47be8ed50fd0aa72965e395ef29409118cd543ba723ab39e2e0532350e1249"
+    },
+    {
+      "path": "src/contracts.ts",
+      "sha256": "7ed34c7ce1c3cc9683b3dba7fb58687edc0db4b67ac721719f06e6ada4fd19f4"
+    },
+    {
+      "path": "src/errors.ts",
+      "sha256": "b0aa2c922bd44ed764c93bfbee0430a2af00590324df6642e4a397992f921b7e"
+    },
+    {
+      "path": "src/import-workbook.ts",
+      "sha256": "b7a42b6ef2c94ed43fe6871f9562df51ca020dd5aa0ba8e1f39d6e1134241e1a"
+    },
+    {
+      "path": "src/journal.ts",
+      "sha256": "501d52a3d484f4d4ad2134a757a5e733befccac1497f99ce8d04dd5251772151"
+    },
+    {
+      "path": "src/mcp-server.ts",
+      "sha256": "4d0b31e19df597214d2da31b51575495d3c0c3f2fd4f8efe1e6f78ea0b4cdcb1"
+    },
+    {
+      "path": "src/mcp.ts",
+      "sha256": "04c6189caa51ebdf57c0838aa4b57dbe4e4bec04505a4d7f3269862a6f23b3ce"
+    },
+    {
+      "path": "src/paths.ts",
+      "sha256": "da5d4a4e304819cd03ac05cb6cf1d9b2acea2a8871c286165babf39c86ea838c"
+    },
+    {
+      "path": "src/runner.ts",
+      "sha256": "b41bb95a6ba43a6c0433f846e20fd2c1c6713b0387e2ed3d8fb9f2a2bf741737"
+    },
+    {
+      "path": "src/bridge/queue.ts",
+      "sha256": "ae8c4026cab2c9a2aaeb15d505abba1a7c50a171c929733db47c59cf960a717f"
+    },
+    {
+      "path": "src/bridge/server.ts",
+      "sha256": "003b495e3db335e4b874e0835c1381bfeb0bd9e714535694e47303d0bdacf852"
+    },
+    {
+      "path": "src/bridge/service.ts",
+      "sha256": "5c01b738f442dd810af9b073f346129c609ed769e8d25b9e0d148a13b68f3c95"
+    },
+    {
+      "path": "src/design/catalog-plan.ts",
+      "sha256": "7fd7055498883cdc4536756809a50e27e7a1b5abfcc671ce7597106375c2ad4c"
+    },
+    {
+      "path": "src/design/plan.ts",
+      "sha256": "c2386c166405b4ddac2a069a42eba470dba7d0758954dec6157a0fb7288a964e"
+    },
+    {
+      "path": "src/design/slice-plan.ts",
+      "sha256": "21875a82d14cc10b89320c65d2dfe7f4b239034fbe39436303c2105d061a0a34"
+    },
+    {
+      "path": "src/design/variant-plan.ts",
+      "sha256": "eacb6d067f690955d7b9686bec246de6b92928252f9aa4a2d48beb21b1260147"
+    },
+    {
+      "path": "src/legacy/catalog-com.jsxinc",
+      "sha256": "2ac5efefbefc8f96ef1bd7901914b7b3256c214f8d6d1a2673b0ad69f99c70e7"
+    },
+    {
+      "path": "src/legacy/client.ts",
+      "sha256": "c49492069b1d08a3f8c0429284d335ff25b732d9dea1220cd40d29b538ab224b"
+    },
+    {
+      "path": "src/legacy/design-com.jsxinc",
+      "sha256": "0c5297bd663f900efbaf28a340f2cf785a74185e0caf67d8ed0dcab1fcd7355a"
+    },
+    {
+      "path": "src/legacy/photoshop-com.jsx",
+      "sha256": "7d56061c74e451519c306b4f0eceb5d54a501bd81bd49e059416b764dee5eea7"
+    },
+    {
+      "path": "src/legacy/slices-com.jsxinc",
+      "sha256": "64c367dffd1bea2d0ecd5fc69e3434c3485ecbf7300ef82ee7201121d9f8c650"
+    },
+    {
+      "path": "src/legacy/variant-com.jsxinc",
+      "sha256": "2635ac7eea9dadaa1aefa088d5e713b920b3a7bdad408f992ee45abf1ef87bb9"
+    },
+    {
+      "path": "src/tasks/checker.ts",
+      "sha256": "30bb5bf2e1b341d69c6b90df0028b0c955cbd188dc929364267aca69229608f4"
+    },
+    {
+      "path": "src/tasks/model.ts",
+      "sha256": "40f44dcf44e14f0c3f81d53f9554386f67a63d009d639d289184c91d374008ad"
+    },
+    {
+      "path": "src/tasks/parser.ts",
+      "sha256": "ed277bc31cdb973bfc77a2e848f7f91b5b4fa8eaf6314ce3927fe18659b35392"
+    },
+    {
+      "path": "src/tasks/planner.ts",
+      "sha256": "ab19bebd685719ba7efc016fd1d280ce8d9fbe8d8566109ddc5b8afdb1522108"
+    },
+    {
+      "path": "tests/bridge-http.test.ts",
+      "sha256": "3a12cc1efe8e106c04d17d8ab8914f88436f9b9d929cb05a6eb90d6c1b9a62d2"
+    },
+    {
+      "path": "tests/bridge-queue.test.ts",
+      "sha256": "22524338ccba8e28323c00f48215650bc7a8acafc45621fd4007fe06eb423f34"
+    },
+    {
+      "path": "tests/bridge-service.test.ts",
+      "sha256": "3e7db05ee45a076fd071d98d7382d34ca169c1c19327a9e20fa37aa22da31703"
+    },
+    {
+      "path": "tests/client.test.ts",
+      "sha256": "231e789f8056cca29a53be6e924f1c10b9b1ca5c60583a7374dfa588884cba6a"
+    },
+    {
+      "path": "tests/fresh-design.test.ts",
+      "sha256": "addb0bf741cab406bcaf6178259e501eb7d25fbfb3249437845223a01c7c8568"
+    },
+    {
+      "path": "tests/import-workbook.test.ts",
+      "sha256": "2ec4ac53f9d1a1ce68dfd41ab1cc5cd1ee6e62c47e1f16fcf15260df6a81c849"
+    },
+    {
+      "path": "tests/mcp.test.ts",
+      "sha256": "e08b80f28a899f6a3dee8a52bc5ce80f8820ba18c7634b012e5025e1f27183c4"
+    },
+    {
+      "path": "tests/native-catalog.test.ts",
+      "sha256": "4d5b23d6115f0ac4ae21b9ad5d5826d3d2512ee201ee5f4db4ff3cc2d9931f37"
+    },
+    {
+      "path": "tests/native-slices.test.ts",
+      "sha256": "1a34a4d04a52e46c705c65aca4284628bab5337c1ab266db39047a332cf7a2f8"
+    },
+    {
+      "path": "tests/native-variant.test.ts",
+      "sha256": "2c635bda8337cab092fd7d54f5a7a92df1426591b91b61acee08f354ef56f730"
+    },
+    {
+      "path": "tests/paths.test.ts",
+      "sha256": "99e530df08c0b779103d0db4f5c2aae3e3c797a4cedf8f2df5b6b27ce3084a75"
+    },
+    {
+      "path": "tests/runner.test.ts",
+      "sha256": "c9c0ac2374e29d18992320345c0df858b7409ae8568d7271fdbfa3768d11912c"
+    },
+    {
+      "path": "tests/tasks.test.ts",
+      "sha256": "51fb041b55102bb2ab5cfcbbe1477fdfcee5727135886a79be8bd3e1962fac83"
+    },
+    {
+      "path": "uxp-plugin/adapter.test.cjs",
+      "sha256": "08ef54fc92dd3240b2c7eb73c6acb90f322389aed4fd2110ef4a19395118ab97"
+    },
+    {
+      "path": "uxp-plugin/index.html",
+      "sha256": "40e0fbc0a6c89b3575e7e3919f6eddfed82ed381ecf11f2b34229814ebfc703b"
+    },
+    {
+      "path": "uxp-plugin/main.js",
+      "sha256": "ce7a8888d6dfbdf47770b9f867fa20cf1fe52c85444e1cfe6e3023732ac906d6"
+    },
+    {
+      "path": "uxp-plugin/main.test.cjs",
+      "sha256": "5cb95acf6638d385284f1e4a81ff723f4e587176a995f4f56a51bd728deeba14"
+    },
+    {
+      "path": "uxp-plugin/manifest.json",
+      "sha256": "66ad2b13bf721686ced5269cee3349f50b9433172d676a1fd4e8040879406012"
+    },
+    {
+      "path": "uxp-plugin/package.json",
+      "sha256": "fde46afc09e7caf17e57871b525435506a5b6ec0796181313695ff3bd3a27586"
+    },
+    {
+      "path": "uxp-plugin/photoshop-adapter.js",
+      "sha256": "7ae8e5625a3bd956c43d98e4541848e93f6d1f68f178c8d7b79bb095e40312bb"
+    },
+    {
+      "path": "uxp-plugin/README.md",
+      "sha256": "5af864a73a628766cbab6fb9f548101ca8a0d0b1dfa9cd676f73616fc74afd62"
+    },
+    {
+      "path": "schemas/operations.schema.json",
+      "sha256": "5d30535f6569c3d803c23ddccdd5b02a062ecd8e4c8fbc7e3e0d3382699daebb"
+    },
+    {
+      "path": "schemas/plugin-hello.schema.json",
+      "sha256": "663aec87c4cab64d9f6fa31da1ac4742a472389605660b6fd8549f2b8e9a74cd"
+    },
+    {
+      "path": "schemas/plugin-result.schema.json",
+      "sha256": "9276932414e3f039e9bb5ecf603a0bef1f7705525a011c7fb753fd47ae023535"
+    },
+    {
+      "path": "schemas/task.schema.json",
+      "sha256": "ab0f1b2dc3c631fd8e52210fddc87bfd636dcd93d68c1be70e26619d9c0d6566"
+    },
+    {
+      "path": "package.json",
+      "sha256": "1821c906811b67e8bdc1878941698ed527621b99058d6fbe57fdf8af9264fb1a"
+    },
+    {
+      "path": "package-lock.json",
+      "sha256": "93a7c22d2f21f2e7cffd8a646085304a4fa557e9c9d8b768a441e265784bea4b"
+    },
+    {
+      "path": "tsconfig.json",
+      "sha256": "58d3e6106525bf76fb339f7d20cab4b8ad7e47ff499db42fa447240995372919"
+    },
+    {
+      "path": "scripts/Invoke-PhotoshopCom.ps1",
+      "sha256": "3de018a22e53be2c95cb5ba7a8178879b9901d3d4e9be3124322fdf3715023de"
+    },
+    {
+      "path": "scripts/generate-schemas.ts",
+      "sha256": "befe8bdf68915de68c43b34b15d123e76b5d8d85c21293b3897b4c03884e7416"
+    },
+    {
+      "path": "scripts/create-example.ts",
+      "sha256": "59ec1124401afdf608a0607e823d16d7a6fde74e282a3ceb2fca5a04ff7c2a91"
+    },
+    {
+      "path": "scripts/smoke-local.ts",
+      "sha256": "542fa1505e9c44e8020184956ee3357abca3f8612eacf606c6b6bec621123709"
+    },
+    {
+      "path": "examples/mapping.example.json",
+      "sha256": "8ec8297cd8dff2b34e88428af137e4450c8be7f67f68fb876ea184b40edc8496"
+    },
+    {
+      "path": "examples/task.example.json",
+      "sha256": "acb002d7eb4b4e4088ea468ba26653dc83bf2f5fa6a6443c096389381c6df026"
+    }
+  ],
+  "adaptedFiles": [
+    "package.json",
+    "studio.config.json",
+    "scripts/generate-schemas.ts"
+  ],
+  "excluded": [
+    "original workbooks",
+    "design outputs",
+    "product photographs",
+    "fonts",
+    "node_modules",
+    ".studio credentials"
+  ],
+  "currentMachinePhotoshopTestedThisPackagingTask": false,
+  "portableRuntimeFiles": [
+    {
+      "path": ".gitignore",
+      "sha256": "e39c5db655b1d0ed274a3d4070158ac047589c11a8d174bb0819395d40881411"
+    },
+    {
+      "path": "assets-in/.gitkeep",
+      "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "path": "examples/mapping.example.json",
+      "sha256": "8ec8297cd8dff2b34e88428af137e4450c8be7f67f68fb876ea184b40edc8496"
+    },
+    {
+      "path": "examples/task.example.json",
+      "sha256": "acb002d7eb4b4e4088ea468ba26653dc83bf2f5fa6a6443c096389381c6df026"
+    },
+    {
+      "path": "inputs/.gitkeep",
+      "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "path": "package-lock.json",
+      "sha256": "93a7c22d2f21f2e7cffd8a646085304a4fa557e9c9d8b768a441e265784bea4b"
+    },
+    {
+      "path": "package.json",
+      "sha256": "7ba35929bd6ce50d082e30ec66a038e1b44e48fdf17bd842793bdf885c2881c7"
+    },
+    {
+      "path": "README.md",
+      "sha256": "72015f475e3f1002da5fde94a29dd4f984d485dc1a07839bd8d03d8c5e0580c4"
+    },
+    {
+      "path": "runs/.gitkeep",
+      "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "path": "schemas/catalog.schema.json",
+      "sha256": "e782686fcd31fb85137ee66c8795dd3a91b99f14c325d530e81d5c43767d9d55"
+    },
+    {
+      "path": "schemas/composition.schema.json",
+      "sha256": "6698d0adb0a495a96237886c9077a7c8457f8069a1f64aacdb1755cf51a473ea"
+    },
+    {
+      "path": "schemas/operations.schema.json",
+      "sha256": "5d30535f6569c3d803c23ddccdd5b02a062ecd8e4c8fbc7e3e0d3382699daebb"
+    },
+    {
+      "path": "schemas/plugin-hello.schema.json",
+      "sha256": "663aec87c4cab64d9f6fa31da1ac4742a472389605660b6fd8549f2b8e9a74cd"
+    },
+    {
+      "path": "schemas/plugin-result.schema.json",
+      "sha256": "9276932414e3f039e9bb5ecf603a0bef1f7705525a011c7fb753fd47ae023535"
+    },
+    {
+      "path": "schemas/slices.schema.json",
+      "sha256": "7bfd80ad074a9e612fdf8af9d9125024886cadef200cc1a15c66086694142199"
+    },
+    {
+      "path": "schemas/task.schema.json",
+      "sha256": "ab0f1b2dc3c631fd8e52210fddc87bfd636dcd93d68c1be70e26619d9c0d6566"
+    },
+    {
+      "path": "schemas/variant.schema.json",
+      "sha256": "5e1bf28cb6944c6cbb503319f21b1dc491deb567d43842590ebc1bc7b87c7d19"
+    },
+    {
+      "path": "scripts/com.ts",
+      "sha256": "60224cffe0f23dc546cb69ca23688d5da4b4c935e1c4949b8bbd67d998ec0faf"
+    },
+    {
+      "path": "scripts/create-example.ts",
+      "sha256": "59ec1124401afdf608a0607e823d16d7a6fde74e282a3ceb2fca5a04ff7c2a91"
+    },
+    {
+      "path": "scripts/generate-schemas.ts",
+      "sha256": "d966d6403699399ce55209d383037c71f786bd8af6284fa31b3d9a575330ae1d"
+    },
+    {
+      "path": "scripts/Invoke-PhotoshopCom.ps1",
+      "sha256": "3de018a22e53be2c95cb5ba7a8178879b9901d3d4e9be3124322fdf3715023de"
+    },
+    {
+      "path": "scripts/smoke-local.ts",
+      "sha256": "542fa1505e9c44e8020184956ee3357abca3f8612eacf606c6b6bec621123709"
+    },
+    {
+      "path": "scripts/validate-plan.ts",
+      "sha256": "3eee4d828b37d3219285c8a2191eae282eb48c2ffe2eb203a6a5f2b75265a17e"
+    },
+    {
+      "path": "src/bridge/queue.ts",
+      "sha256": "ae8c4026cab2c9a2aaeb15d505abba1a7c50a171c929733db47c59cf960a717f"
+    },
+    {
+      "path": "src/bridge/server.ts",
+      "sha256": "003b495e3db335e4b874e0835c1381bfeb0bd9e714535694e47303d0bdacf852"
+    },
+    {
+      "path": "src/bridge/service.ts",
+      "sha256": "5c01b738f442dd810af9b073f346129c609ed769e8d25b9e0d148a13b68f3c95"
+    },
+    {
+      "path": "src/cli.ts",
+      "sha256": "3277962f233081632fbc2c139d4306d1f601ddb15a0c27db3fcfeb0e994020d8"
+    },
+    {
+      "path": "src/client.ts",
+      "sha256": "262af199bb1d7ea37fe719c6311e23feb08ccd062e76708fe8272bbfe10bf0f2"
+    },
+    {
+      "path": "src/config.ts",
+      "sha256": "fe47be8ed50fd0aa72965e395ef29409118cd543ba723ab39e2e0532350e1249"
+    },
+    {
+      "path": "src/contracts.ts",
+      "sha256": "7ed34c7ce1c3cc9683b3dba7fb58687edc0db4b67ac721719f06e6ada4fd19f4"
+    },
+    {
+      "path": "src/design/catalog-plan.ts",
+      "sha256": "7fd7055498883cdc4536756809a50e27e7a1b5abfcc671ce7597106375c2ad4c"
+    },
+    {
+      "path": "src/design/plan.ts",
+      "sha256": "c2386c166405b4ddac2a069a42eba470dba7d0758954dec6157a0fb7288a964e"
+    },
+    {
+      "path": "src/design/slice-plan.ts",
+      "sha256": "21875a82d14cc10b89320c65d2dfe7f4b239034fbe39436303c2105d061a0a34"
+    },
+    {
+      "path": "src/design/variant-plan.ts",
+      "sha256": "eacb6d067f690955d7b9686bec246de6b92928252f9aa4a2d48beb21b1260147"
+    },
+    {
+      "path": "src/errors.ts",
+      "sha256": "b0aa2c922bd44ed764c93bfbee0430a2af00590324df6642e4a397992f921b7e"
+    },
+    {
+      "path": "src/import-workbook.ts",
+      "sha256": "b7a42b6ef2c94ed43fe6871f9562df51ca020dd5aa0ba8e1f39d6e1134241e1a"
+    },
+    {
+      "path": "src/journal.ts",
+      "sha256": "501d52a3d484f4d4ad2134a757a5e733befccac1497f99ce8d04dd5251772151"
+    },
+    {
+      "path": "src/legacy/catalog-com.jsxinc",
+      "sha256": "2ac5efefbefc8f96ef1bd7901914b7b3256c214f8d6d1a2673b0ad69f99c70e7"
+    },
+    {
+      "path": "src/legacy/client.ts",
+      "sha256": "c49492069b1d08a3f8c0429284d335ff25b732d9dea1220cd40d29b538ab224b"
+    },
+    {
+      "path": "src/legacy/design-com.jsxinc",
+      "sha256": "0c5297bd663f900efbaf28a340f2cf785a74185e0caf67d8ed0dcab1fcd7355a"
+    },
+    {
+      "path": "src/legacy/photoshop-com.jsx",
+      "sha256": "7d56061c74e451519c306b4f0eceb5d54a501bd81bd49e059416b764dee5eea7"
+    },
+    {
+      "path": "src/legacy/slices-com.jsxinc",
+      "sha256": "64c367dffd1bea2d0ecd5fc69e3434c3485ecbf7300ef82ee7201121d9f8c650"
+    },
+    {
+      "path": "src/legacy/variant-com.jsxinc",
+      "sha256": "2635ac7eea9dadaa1aefa088d5e713b920b3a7bdad408f992ee45abf1ef87bb9"
+    },
+    {
+      "path": "src/mcp-server.ts",
+      "sha256": "4d0b31e19df597214d2da31b51575495d3c0c3f2fd4f8efe1e6f78ea0b4cdcb1"
+    },
+    {
+      "path": "src/mcp.ts",
+      "sha256": "04c6189caa51ebdf57c0838aa4b57dbe4e4bec04505a4d7f3269862a6f23b3ce"
+    },
+    {
+      "path": "src/paths.ts",
+      "sha256": "da5d4a4e304819cd03ac05cb6cf1d9b2acea2a8871c286165babf39c86ea838c"
+    },
+    {
+      "path": "src/runner.ts",
+      "sha256": "b41bb95a6ba43a6c0433f846e20fd2c1c6713b0387e2ed3d8fb9f2a2bf741737"
+    },
+    {
+      "path": "src/tasks/checker.ts",
+      "sha256": "30bb5bf2e1b341d69c6b90df0028b0c955cbd188dc929364267aca69229608f4"
+    },
+    {
+      "path": "src/tasks/model.ts",
+      "sha256": "40f44dcf44e14f0c3f81d53f9554386f67a63d009d639d289184c91d374008ad"
+    },
+    {
+      "path": "src/tasks/parser.ts",
+      "sha256": "ed277bc31cdb973bfc77a2e848f7f91b5b4fa8eaf6314ce3927fe18659b35392"
+    },
+    {
+      "path": "src/tasks/planner.ts",
+      "sha256": "ab19bebd685719ba7efc016fd1d280ce8d9fbe8d8566109ddc5b8afdb1522108"
+    },
+    {
+      "path": "studio.config.json",
+      "sha256": "091efc8162b254be1136789a03d230500c0c3ef1f8551e59ee51ec92167b6990"
+    },
+    {
+      "path": "tests/bridge-http.test.ts",
+      "sha256": "3a12cc1efe8e106c04d17d8ab8914f88436f9b9d929cb05a6eb90d6c1b9a62d2"
+    },
+    {
+      "path": "tests/bridge-queue.test.ts",
+      "sha256": "22524338ccba8e28323c00f48215650bc7a8acafc45621fd4007fe06eb423f34"
+    },
+    {
+      "path": "tests/bridge-service.test.ts",
+      "sha256": "3e7db05ee45a076fd071d98d7382d34ca169c1c19327a9e20fa37aa22da31703"
+    },
+    {
+      "path": "tests/client.test.ts",
+      "sha256": "231e789f8056cca29a53be6e924f1c10b9b1ca5c60583a7374dfa588884cba6a"
+    },
+    {
+      "path": "tests/fresh-design.test.ts",
+      "sha256": "addb0bf741cab406bcaf6178259e501eb7d25fbfb3249437845223a01c7c8568"
+    },
+    {
+      "path": "tests/import-workbook.test.ts",
+      "sha256": "2ec4ac53f9d1a1ce68dfd41ab1cc5cd1ee6e62c47e1f16fcf15260df6a81c849"
+    },
+    {
+      "path": "tests/mcp.test.ts",
+      "sha256": "e08b80f28a899f6a3dee8a52bc5ce80f8820ba18c7634b012e5025e1f27183c4"
+    },
+    {
+      "path": "tests/native-catalog.test.ts",
+      "sha256": "4d5b23d6115f0ac4ae21b9ad5d5826d3d2512ee201ee5f4db4ff3cc2d9931f37"
+    },
+    {
+      "path": "tests/native-slices.test.ts",
+      "sha256": "1a34a4d04a52e46c705c65aca4284628bab5337c1ab266db39047a332cf7a2f8"
+    },
+    {
+      "path": "tests/native-variant.test.ts",
+      "sha256": "2c635bda8337cab092fd7d54f5a7a92df1426591b91b61acee08f354ef56f730"
+    },
+    {
+      "path": "tests/paths.test.ts",
+      "sha256": "99e530df08c0b779103d0db4f5c2aae3e3c797a4cedf8f2df5b6b27ce3084a75"
+    },
+    {
+      "path": "tests/portable-entrypoints.test.ts",
+      "sha256": "cabeb6819e52bc7604c4c533a294d70de7ceb52d71cddb8722982915d4f5ece1"
+    },
+    {
+      "path": "tests/runner.test.ts",
+      "sha256": "c9c0ac2374e29d18992320345c0df858b7409ae8568d7271fdbfa3768d11912c"
+    },
+    {
+      "path": "tests/tasks.test.ts",
+      "sha256": "51fb041b55102bb2ab5cfcbbe1477fdfcee5727135886a79be8bd3e1962fac83"
+    },
+    {
+      "path": "tsconfig.json",
+      "sha256": "58d3e6106525bf76fb339f7d20cab4b8ad7e47ff499db42fa447240995372919"
+    },
+    {
+      "path": "uxp-plugin/adapter.test.cjs",
+      "sha256": "08ef54fc92dd3240b2c7eb73c6acb90f322389aed4fd2110ef4a19395118ab97"
+    },
+    {
+      "path": "uxp-plugin/index.html",
+      "sha256": "40e0fbc0a6c89b3575e7e3919f6eddfed82ed381ecf11f2b34229814ebfc703b"
+    },
+    {
+      "path": "uxp-plugin/main.js",
+      "sha256": "ce7a8888d6dfbdf47770b9f867fa20cf1fe52c85444e1cfe6e3023732ac906d6"
+    },
+    {
+      "path": "uxp-plugin/main.test.cjs",
+      "sha256": "5cb95acf6638d385284f1e4a81ff723f4e587176a995f4f56a51bd728deeba14"
+    },
+    {
+      "path": "uxp-plugin/manifest.json",
+      "sha256": "66ad2b13bf721686ced5269cee3349f50b9433172d676a1fd4e8040879406012"
+    },
+    {
+      "path": "uxp-plugin/package.json",
+      "sha256": "fde46afc09e7caf17e57871b525435506a5b6ec0796181313695ff3bd3a27586"
+    },
+    {
+      "path": "uxp-plugin/photoshop-adapter.js",
+      "sha256": "7ae8e5625a3bd956c43d98e4541848e93f6d1f68f178c8d7b79bb095e40312bb"
+    },
+    {
+      "path": "uxp-plugin/README.md",
+      "sha256": "5af864a73a628766cbab6fb9f548101ca8a0d0b1dfa9cd676f73616fc74afd62"
+    }
+  ]
+}

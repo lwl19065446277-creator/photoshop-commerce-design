@@ -1,0 +1,444 @@
+{
+  "$ref": "#/definitions/Composition",
+  "definitions": {
+    "Composition": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "const": "compose"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "width": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 20000
+        },
+        "height": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 20000
+        },
+        "psd": {
+          "type": "string",
+          "minLength": 1
+        },
+        "png": {
+          "type": "string",
+          "minLength": 1
+        },
+        "jpg": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sourceCells": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "sheet": {
+                "type": "string"
+              },
+              "cell": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "sheet",
+              "cell"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "groupOrder": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "maxItems": 300
+        },
+        "layers": {
+          "type": "array",
+          "items": {
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 150
+                  },
+                  "group": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 80
+                  },
+                  "opacity": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 100
+                  },
+                  "gradientMask": {
+                    "type": "object",
+                    "properties": {
+                      "from": {
+                        "type": "array",
+                        "minItems": 2,
+                        "maxItems": 2,
+                        "items": [
+                          {
+                            "type": "number",
+                            "minimum": -20000,
+                            "maximum": 20000
+                          },
+                          {
+                            "$ref": "#/definitions/Composition/properties/layers/items/anyOf/0/properties/gradientMask/properties/from/items/0"
+                          }
+                        ]
+                      },
+                      "to": {
+                        "type": "array",
+                        "minItems": 2,
+                        "maxItems": 2,
+                        "items": [
+                          {
+                            "$ref": "#/definitions/Composition/properties/layers/items/anyOf/0/properties/gradientMask/properties/from/items/0"
+                          },
+                          {
+                            "$ref": "#/definitions/Composition/properties/layers/items/anyOf/0/properties/gradientMask/properties/from/items/0"
+                          }
+                        ]
+                      },
+                      "feather": {
+                        "type": "number",
+                        "minimum": 0,
+                        "maximum": 100
+                      }
+                    },
+                    "required": [
+                      "from",
+                      "to"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "type": {
+                    "type": "string",
+                    "const": "text"
+                  },
+                  "text": {
+                    "type": "string",
+                    "maxLength": 10000
+                  },
+                  "font": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "size": {
+                    "type": "number",
+                    "minimum": 1,
+                    "maximum": 1296
+                  },
+                  "x": {
+                    "type": "number"
+                  },
+                  "y": {
+                    "$ref": "#/definitions/Composition/properties/layers/items/anyOf/0/properties/x"
+                  },
+                  "color": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{6}$"
+                  },
+                  "align": {
+                    "type": "string",
+                    "enum": [
+                      "left",
+                      "center",
+                      "right"
+                    ]
+                  },
+                  "maxWidth": {
+                    "type": "number",
+                    "exclusiveMinimum": 0
+                  },
+                  "tracking": {
+                    "type": "number",
+                    "minimum": -1000,
+                    "maximum": 10000
+                  },
+                  "leading": {
+                    "type": "number",
+                    "exclusiveMinimum": 0
+                  },
+                  "italic": {
+                    "type": "boolean"
+                  },
+                  "strike": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "name",
+                  "group",
+                  "type",
+                  "text",
+                  "font",
+                  "size",
+                  "x",
+                  "y",
+                  "color"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "$ref": "#/definitions/Composition/properties/layers/items/anyOf/0/properties/name"
+                  },
+                  "group": {
+                    "$ref": "#/definitions/Composition/properties/layers/items/anyOf/0/properties/group"
+                  },
+                  "opacity": {
+                    "$ref": "#/definitions/Composition/properties/layers/items/anyOf/0/properties/opacity"
+                  },
+                  "gradientMask": {
+                    "$ref": "#/definitions/Composition/properties/layers/items/anyOf/0/properties/gradientMask"
+                  },
+                  "type": {
+                    "type": "string",
+                    "const": "rect"
+                  },
+                  "x": {
+                    "$ref": "#/definitions/Composition/properties/layers/items/anyOf/0/properties/x"
+                  },
+                  "y": {
+                    "$ref": "#/definitions/Composition/properties/layers/items/anyOf/0/properties/x"
+                  },
+                  "width": {
+                    "type": "number",
+                    "exclusiveMinimum": 0
+                  },
+                  "height": {
+                    "type": "number",
+                    "exclusiveMinimum": 0
+                  },
+                  "radius": {
+                    "type": "number",
+                    "minimum": 0
+                  },
+                  "color": {
+                    "$ref": "#/definitions/Composition/properties/layers/items/anyOf/0/properties/color"
+                  }
+                },
+                "required": [
+                  "name",
+                  "group",
+                  "type",
+                  "x",
+                  "y",
+                  "width",
+                  "height",
+                  "color"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "$ref": "#/definitions/Composition/properties/layers/items/anyOf/0/properties/name"
+                  },
+                  "group": {
+                    "$ref": "#/definitions/Composition/properties/layers/items/anyOf/0/properties/group"
+                  },
+                  "opacity": {
+                    "$ref": "#/definitions/Composition/properties/layers/items/anyOf/0/properties/opacity"
+                  },
+                  "gradientMask": {
+                    "$ref": "#/definitions/Composition/properties/layers/items/anyOf/0/properties/gradientMask"
+                  },
+                  "type": {
+                    "type": "string",
+                    "const": "image"
+                  },
+                  "path": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "box": {
+                    "type": "array",
+                    "minItems": 4,
+                    "maxItems": 4,
+                    "items": [
+                      {
+                        "$ref": "#/definitions/Composition/properties/layers/items/anyOf/0/properties/x"
+                      },
+                      {
+                        "$ref": "#/definitions/Composition/properties/layers/items/anyOf/0/properties/x"
+                      },
+                      {
+                        "type": "number",
+                        "exclusiveMinimum": 0
+                      },
+                      {
+                        "type": "number",
+                        "exclusiveMinimum": 0
+                      }
+                    ]
+                  },
+                  "crop": {
+                    "type": "array",
+                    "minItems": 4,
+                    "maxItems": 4,
+                    "items": [
+                      {
+                        "$ref": "#/definitions/Composition/properties/layers/items/anyOf/0/properties/x"
+                      },
+                      {
+                        "$ref": "#/definitions/Composition/properties/layers/items/anyOf/0/properties/x"
+                      },
+                      {
+                        "$ref": "#/definitions/Composition/properties/layers/items/anyOf/0/properties/x"
+                      },
+                      {
+                        "$ref": "#/definitions/Composition/properties/layers/items/anyOf/0/properties/x"
+                      }
+                    ]
+                  },
+                  "tint": {
+                    "type": "string",
+                    "enum": [
+                      "000000",
+                      "FFFFFF"
+                    ]
+                  },
+                  "subjectMask": {
+                    "type": "boolean"
+                  },
+                  "anchor": {
+                    "type": "string",
+                    "enum": [
+                      "center",
+                      "bottom"
+                    ]
+                  },
+                  "fit": {
+                    "type": "string",
+                    "enum": [
+                      "contain",
+                      "cover"
+                    ]
+                  },
+                  "clip": {
+                    "type": "object",
+                    "properties": {
+                      "x": {
+                        "$ref": "#/definitions/Composition/properties/layers/items/anyOf/0/properties/x"
+                      },
+                      "y": {
+                        "$ref": "#/definitions/Composition/properties/layers/items/anyOf/0/properties/x"
+                      },
+                      "width": {
+                        "type": "number",
+                        "exclusiveMinimum": 0
+                      },
+                      "height": {
+                        "type": "number",
+                        "exclusiveMinimum": 0
+                      },
+                      "radius": {
+                        "type": "number",
+                        "minimum": 0
+                      }
+                    },
+                    "required": [
+                      "x",
+                      "y",
+                      "width",
+                      "height",
+                      "radius"
+                    ],
+                    "additionalProperties": false
+                  }
+                },
+                "required": [
+                  "name",
+                  "group",
+                  "type",
+                  "path",
+                  "box"
+                ],
+                "additionalProperties": false
+              }
+            ]
+          },
+          "minItems": 1,
+          "maxItems": 600
+        },
+        "slices": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 150
+              },
+              "x": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "y": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "width": {
+                "type": "integer",
+                "exclusiveMinimum": 0
+              },
+              "height": {
+                "type": "integer",
+                "exclusiveMinimum": 0
+              },
+              "png": {
+                "type": "string",
+                "minLength": 1
+              },
+              "jpg": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "name",
+              "x",
+              "y",
+              "width",
+              "height"
+            ],
+            "additionalProperties": false
+          },
+          "maxItems": 200
+        }
+      },
+      "required": [
+        "kind",
+        "name",
+        "width",
+        "height",
+        "psd",
+        "png",
+        "sourceCells",
+        "layers"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}

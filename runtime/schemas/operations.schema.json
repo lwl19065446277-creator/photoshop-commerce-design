@@ -1,0 +1,524 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Design Agent Studio operation request",
+  "oneOf": [
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operation",
+        "args"
+      ],
+      "properties": {
+        "operation": {
+          "const": "preflight_assets"
+        },
+        "args": {
+          "type": "object",
+          "properties": {
+            "templatePath": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 4096
+            },
+            "productImagePath": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 4096
+            },
+            "referencePath": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 4096
+            }
+          },
+          "required": [
+            "templatePath",
+            "productImagePath"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        }
+      }
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operation",
+        "args"
+      ],
+      "properties": {
+        "operation": {
+          "const": "ping"
+        },
+        "args": {
+          "type": "object",
+          "properties": {},
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        }
+      }
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operation",
+        "args"
+      ],
+      "properties": {
+        "operation": {
+          "const": "get_document_info"
+        },
+        "args": {
+          "type": "object",
+          "properties": {
+            "documentId": {
+              "type": "integer",
+              "exclusiveMinimum": 0
+            }
+          },
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        }
+      }
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operation",
+        "args"
+      ],
+      "properties": {
+        "operation": {
+          "const": "list_layers"
+        },
+        "args": {
+          "type": "object",
+          "properties": {
+            "documentId": {
+              "type": "integer",
+              "exclusiveMinimum": 0
+            }
+          },
+          "required": [
+            "documentId"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        }
+      }
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operation",
+        "args"
+      ],
+      "properties": {
+        "operation": {
+          "const": "find_layer"
+        },
+        "args": {
+          "type": "object",
+          "properties": {
+            "documentId": {
+              "type": "integer",
+              "exclusiveMinimum": 0
+            },
+            "name": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 500
+            }
+          },
+          "required": [
+            "documentId",
+            "name"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        }
+      }
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operation",
+        "args"
+      ],
+      "properties": {
+        "operation": {
+          "const": "open_working_copy"
+        },
+        "args": {
+          "type": "object",
+          "properties": {
+            "templatePath": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 4096
+            }
+          },
+          "required": [
+            "templatePath"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        }
+      }
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operation",
+        "args"
+      ],
+      "properties": {
+        "operation": {
+          "const": "set_text"
+        },
+        "args": {
+          "type": "object",
+          "properties": {
+            "documentId": {
+              "type": "integer",
+              "exclusiveMinimum": 0
+            },
+            "layerId": {
+              "type": "integer",
+              "exclusiveMinimum": 0
+            },
+            "text": {
+              "type": "string",
+              "maxLength": 20000
+            }
+          },
+          "required": [
+            "documentId",
+            "layerId",
+            "text"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        }
+      }
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operation",
+        "args"
+      ],
+      "properties": {
+        "operation": {
+          "const": "replace_smart_object"
+        },
+        "args": {
+          "type": "object",
+          "properties": {
+            "documentId": {
+              "type": "integer",
+              "exclusiveMinimum": 0
+            },
+            "layerId": {
+              "type": "integer",
+              "exclusiveMinimum": 0
+            },
+            "path": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 4096
+            }
+          },
+          "required": [
+            "documentId",
+            "layerId",
+            "path"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        }
+      }
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operation",
+        "args"
+      ],
+      "properties": {
+        "operation": {
+          "const": "set_visibility"
+        },
+        "args": {
+          "type": "object",
+          "properties": {
+            "documentId": {
+              "type": "integer",
+              "exclusiveMinimum": 0
+            },
+            "layerId": {
+              "type": "integer",
+              "exclusiveMinimum": 0
+            },
+            "visible": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "documentId",
+            "layerId",
+            "visible"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        }
+      }
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operation",
+        "args"
+      ],
+      "properties": {
+        "operation": {
+          "const": "transform_layer"
+        },
+        "args": {
+          "type": "object",
+          "properties": {
+            "documentId": {
+              "type": "integer",
+              "exclusiveMinimum": 0
+            },
+            "layerId": {
+              "type": "integer",
+              "exclusiveMinimum": 0
+            },
+            "translateX": {
+              "type": "number",
+              "minimum": -50000,
+              "maximum": 50000
+            },
+            "translateY": {
+              "type": "number",
+              "minimum": -50000,
+              "maximum": 50000
+            },
+            "scalePercent": {
+              "type": "number",
+              "minimum": 1,
+              "maximum": 1000
+            }
+          },
+          "required": [
+            "documentId",
+            "layerId"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        }
+      }
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operation",
+        "args"
+      ],
+      "properties": {
+        "operation": {
+          "const": "create_text"
+        },
+        "args": {
+          "type": "object",
+          "properties": {
+            "documentId": {
+              "type": "integer",
+              "exclusiveMinimum": 0
+            },
+            "name": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 500
+            },
+            "text": {
+              "type": "string",
+              "maxLength": 20000
+            },
+            "x": {
+              "type": "number"
+            },
+            "y": {
+              "type": "number"
+            },
+            "fontSize": {
+              "type": "number",
+              "exclusiveMinimum": 0,
+              "maximum": 2000
+            }
+          },
+          "required": [
+            "documentId",
+            "name",
+            "text",
+            "x",
+            "y",
+            "fontSize"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        }
+      }
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operation",
+        "args"
+      ],
+      "properties": {
+        "operation": {
+          "const": "get_preview"
+        },
+        "args": {
+          "type": "object",
+          "properties": {
+            "documentId": {
+              "type": "integer",
+              "exclusiveMinimum": 0
+            },
+            "name": {
+              "type": "string",
+              "maxLength": 100
+            }
+          },
+          "required": [
+            "documentId"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        }
+      }
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operation",
+        "args"
+      ],
+      "properties": {
+        "operation": {
+          "const": "save_psd"
+        },
+        "args": {
+          "type": "object",
+          "properties": {
+            "documentId": {
+              "type": "integer",
+              "exclusiveMinimum": 0
+            },
+            "name": {
+              "type": "string",
+              "maxLength": 100
+            }
+          },
+          "required": [
+            "documentId"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        }
+      }
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operation",
+        "args"
+      ],
+      "properties": {
+        "operation": {
+          "const": "export_image"
+        },
+        "args": {
+          "type": "object",
+          "properties": {
+            "documentId": {
+              "type": "integer",
+              "exclusiveMinimum": 0
+            },
+            "name": {
+              "type": "string",
+              "maxLength": 100
+            },
+            "format": {
+              "type": "string",
+              "enum": [
+                "png",
+                "jpg"
+              ]
+            },
+            "quality": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 12
+            }
+          },
+          "required": [
+            "documentId",
+            "format"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        }
+      }
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operation",
+        "args"
+      ],
+      "properties": {
+        "operation": {
+          "const": "close_document"
+        },
+        "args": {
+          "type": "object",
+          "properties": {
+            "documentId": {
+              "type": "integer",
+              "exclusiveMinimum": 0
+            },
+            "save": {
+              "type": "boolean",
+              "const": false,
+              "default": false
+            }
+          },
+          "required": [
+            "documentId"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        }
+      }
+    }
+  ]
+}

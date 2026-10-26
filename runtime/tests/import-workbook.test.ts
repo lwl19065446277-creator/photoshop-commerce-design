@@ -1,0 +1,35 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { mkdtemp, mkdir, rm, writeFile } from 'node:fs/promises';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
+import ExcelJS from 'exceljs';
+import { importWorkbook } from '../src/import-workbook.js';
+import { hashFile } from '../src/paths.js';
+
+test('public workbook import cannot turn an outside asset binding into an executable task', async t => {
+  const root = await mkdtemp(join(tmpdir(), 'das-import-boundary-test-'));
+  t.after(() => rm(root, { recursive: true, force: true }));
+  const materialRoot = join(root, 'materials');
+  const workbookRoot = join(root, 'workbooks');
+  await mkdir(materialRoot);
+  await mkdir(workbookRoot);
+  await writeFile(join(root, 'studio.config.json'), JSON.stringify({ allowedInputRoots: ['materials'], workbookRoots: ['workbooks'], outputRoot: 'outputs' }));
+  const workbook = new ExcelJS.Workbook();
+  const sheet = workbook.addWorksheet('需求');
+  sheet.addRow(['商品名称', '主标题', '宽度', '高度', '主标题图层', '商品图层']);
+  sheet.addRow(['TEST商品', '准确文案', 800, 800, 'title', 'product']);
+  const file = join(workbookRoot, 'requirements.xlsx');
+  await workbook.xlsx.writeFile(file);
+  const beforeHash = await hashFile(file);
+  const template = join(materialRoot, 'template.psd');
+  const outsideProduct = join(root, 'not-authorized-product.png');
+  await writeFile(template, 'TEST PATH FIXTURE ONLY');
+  await writeFile(outsideProduct, 'TEST PATH FIXTURE ONLY');
+  const [task] = await importWorkbook(root, file, { assetBindings: { templatePath: template, productImagePath: outsideProduct } });
+  assert.equal(task!.status, 'needs_input');
+  assert.equal(task!.templatePath, template);
+  assert.equal(task!.productImagePath, undefined);
+  assert.ok(task!.issues.some(issue => issue.code === 'ASSET_NOT_AUTHORIZED_OR_MISSING' && issue.field === 'productImagePath'));
+  assert.equal(await hashFile(file), beforeHash);
+});

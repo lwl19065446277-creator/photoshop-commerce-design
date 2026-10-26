@@ -1,0 +1,197 @@
+{
+  "$ref": "#/definitions/NativeCatalog",
+  "definitions": {
+    "NativeCatalog": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "const": "native-catalog"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "working": {
+          "type": "string"
+        },
+        "sourceSha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "width": {
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "maximum": 30000
+        },
+        "height": {
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "maximum": 30000
+        },
+        "templateGroupId": {
+          "type": "integer",
+          "exclusiveMinimum": 0
+        },
+        "hideGroupIds": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/NativeCatalog/properties/templateGroupId"
+          },
+          "minItems": 1,
+          "maxItems": 100
+        },
+        "rowStep": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "maximum": 2000
+        },
+        "columnStep": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "maximum": 1500
+        },
+        "gradient": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 2,
+          "items": [
+            {
+              "type": "string",
+              "pattern": "^[0-9a-f]{6}$"
+            },
+            {
+              "$ref": "#/definitions/NativeCatalog/properties/gradient/items/0"
+            }
+          ]
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^\\d+$"
+              },
+              "sku": {
+                "type": "string",
+                "minLength": 1
+              },
+              "name": {
+                "type": "string"
+              },
+              "path": {
+                "type": "string"
+              },
+              "sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "price": {
+                "type": "integer",
+                "exclusiveMinimum": 0
+              },
+              "originalPrice": {
+                "type": "integer",
+                "exclusiveMinimum": 0
+              },
+              "saving": {
+                "type": "integer",
+                "minimum": 0
+              }
+            },
+            "required": [
+              "id",
+              "sku",
+              "name",
+              "path",
+              "sha256",
+              "price",
+              "originalPrice",
+              "saving"
+            ],
+            "additionalProperties": false
+          },
+          "minItems": 1,
+          "maxItems": 60
+        },
+        "psd": {
+          "type": "string"
+        },
+        "png": {
+          "type": "string"
+        },
+        "jpg": {
+          "type": "string"
+        },
+        "slices": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 150
+              },
+              "x": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "y": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "width": {
+                "type": "integer",
+                "exclusiveMinimum": 0
+              },
+              "height": {
+                "type": "integer",
+                "exclusiveMinimum": 0
+              },
+              "png": {
+                "type": "string",
+                "minLength": 1
+              },
+              "jpg": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "name",
+              "x",
+              "y",
+              "width",
+              "height"
+            ],
+            "additionalProperties": false
+          },
+          "maxItems": 200
+        }
+      },
+      "required": [
+        "kind",
+        "name",
+        "working",
+        "sourceSha256",
+        "width",
+        "height",
+        "templateGroupId",
+        "hideGroupIds",
+        "rowStep",
+        "columnStep",
+        "gradient",
+        "items",
+        "psd",
+        "png",
+        "jpg",
+        "slices"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}

@@ -1,0 +1,14 @@
+import {readFile} from 'node:fs/promises';
+import {resolve} from 'node:path';
+import {validateRenderPlan} from '../src/design/plan.js';
+import {validateCatalogPlan} from '../src/design/catalog-plan.js';
+import {validateNativeSlicePlan} from '../src/design/slice-plan.js';
+import {validateVariantPlan} from '../src/design/variant-plan.js';
+const file=process.argv[2];if(!file)throw Error('Usage: npm run validate-plan -- runs/NAME/plan.json');
+const path=resolve(file),p=JSON.parse(await readFile(path,'utf8'));
+if(['compose','extract'].includes(p.kind))await validateRenderPlan(path,resolve('.'));
+else if(p.kind==='native-catalog')await validateCatalogPlan(path,resolve('.'));
+else if(p.kind==='native-slices')await validateNativeSlicePlan(path,resolve('.'));
+else if(p.kind==='native-variant')await validateVariantPlan(path,resolve('.'));
+else throw Error('Unknown plan kind');
+console.log(JSON.stringify({valid:true,photoshopCalled:false,kind:p.kind,path}));

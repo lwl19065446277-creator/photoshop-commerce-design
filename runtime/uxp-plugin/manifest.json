@@ -1,0 +1,18 @@
+{
+  "manifestVersion": 5,
+  "id": "com.designagent.studio.photoshop",
+  "name": "Design Agent Studio",
+  "version": "0.1.0",
+  "main": "index.html",
+  "host": { "app": "PS", "minVersion": "24.2.0", "data": { "apiVersion": 2 } },
+  "entrypoints": [{
+    "type": "panel", "id": "studio", "label": { "default": "Design Agent Studio" },
+    "minimumSize": { "width": 280, "height": 280 },
+    "preferredDockedSize": { "width": 340, "height": 420 },
+    "preferredFloatingSize": { "width": 380, "height": 440 }
+  }],
+  "requiredPermissions": {
+    "localFileSystem": "fullAccess",
+    "network": { "domains": ["http://127.0.0.1:57123"] }
+  }
+}

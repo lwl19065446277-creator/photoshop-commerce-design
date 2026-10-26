@@ -1,0 +1,102 @@
+{
+  "$ref": "#/definitions/NativeSlices",
+  "definitions": {
+    "NativeSlices": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "const": "native-slices"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "working": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sourceSha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "rasterSource": {
+          "type": "string",
+          "minLength": 1
+        },
+        "rasterSha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "width": {
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "maximum": 30000
+        },
+        "height": {
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "maximum": 30000
+        },
+        "slices": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 150
+              },
+              "x": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "y": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "width": {
+                "type": "integer",
+                "exclusiveMinimum": 0
+              },
+              "height": {
+                "type": "integer",
+                "exclusiveMinimum": 0
+              },
+              "png": {
+                "type": "string",
+                "minLength": 1
+              },
+              "jpg": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "name",
+              "x",
+              "y",
+              "width",
+              "height"
+            ],
+            "additionalProperties": false
+          },
+          "minItems": 1,
+          "maxItems": 200
+        }
+      },
+      "required": [
+        "kind",
+        "name",
+        "working",
+        "sourceSha256",
+        "width",
+        "height",
+        "slices"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}

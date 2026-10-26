@@ -1,0 +1,158 @@
+{
+  "$ref": "#/definitions/DesignTask",
+  "definitions": {
+    "DesignTask": {
+      "type": "object",
+      "properties": {
+        "productName": {
+          "type": "string",
+          "maxLength": 20000
+        },
+        "sku": {
+          "$ref": "#/definitions/DesignTask/properties/productName"
+        },
+        "taskType": {
+          "$ref": "#/definitions/DesignTask/properties/productName"
+        },
+        "title": {
+          "$ref": "#/definitions/DesignTask/properties/productName"
+        },
+        "subtitle": {
+          "$ref": "#/definitions/DesignTask/properties/productName"
+        },
+        "width": {
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "maximum": 30000
+        },
+        "height": {
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "maximum": 30000
+        },
+        "templatePath": {
+          "$ref": "#/definitions/DesignTask/properties/productName"
+        },
+        "productImagePath": {
+          "$ref": "#/definitions/DesignTask/properties/productName"
+        },
+        "titleLayer": {
+          "$ref": "#/definitions/DesignTask/properties/productName"
+        },
+        "subtitleLayer": {
+          "$ref": "#/definitions/DesignTask/properties/productName"
+        },
+        "productLayer": {
+          "$ref": "#/definitions/DesignTask/properties/productName"
+        },
+        "outputName": {
+          "$ref": "#/definitions/DesignTask/properties/productName"
+        },
+        "style": {
+          "$ref": "#/definitions/DesignTask/properties/productName"
+        },
+        "requirements": {
+          "$ref": "#/definitions/DesignTask/properties/productName"
+        },
+        "referencePath": {
+          "$ref": "#/definitions/DesignTask/properties/productName"
+        },
+        "delivery": {
+          "$ref": "#/definitions/DesignTask/properties/productName"
+        },
+        "layout": {
+          "type": "object",
+          "properties": {
+            "translateX": {
+              "type": "number",
+              "minimum": -50000,
+              "maximum": 50000
+            },
+            "translateY": {
+              "type": "number",
+              "minimum": -50000,
+              "maximum": 50000
+            },
+            "scalePercent": {
+              "type": "number",
+              "minimum": 1,
+              "maximum": 1000
+            }
+          },
+          "additionalProperties": false
+        },
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+        },
+        "source": {
+          "type": "object",
+          "properties": {
+            "workbook": {
+              "type": "string"
+            },
+            "sheet": {
+              "type": "string"
+            },
+            "row": {
+              "type": "integer",
+              "exclusiveMinimum": 0
+            }
+          },
+          "required": [
+            "workbook",
+            "sheet",
+            "row"
+          ],
+          "additionalProperties": false
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "ready",
+            "needs_input"
+          ]
+        },
+        "issues": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string"
+              },
+              "field": {
+                "type": "string"
+              },
+              "message": {
+                "type": "string"
+              },
+              "severity": {
+                "type": "string",
+                "enum": [
+                  "error",
+                  "warning"
+                ]
+              }
+            },
+            "required": [
+              "code",
+              "message",
+              "severity"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "id",
+        "source",
+        "status",
+        "issues"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}

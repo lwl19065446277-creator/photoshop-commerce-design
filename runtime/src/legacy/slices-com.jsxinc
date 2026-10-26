@@ -1,0 +1,72 @@
+/* Export contiguous raster slices from an independent final PSD copy. ES3. */
+function exportNativeSlices(planPath) {
+    var pf = fileFor(planPath), root = canon(pf.parent), p, doc = null, merged = null, piece = null;
+    var previous = app.documents.length ? app.activeDocument : null, oldRulers = app.preferences.rulerUnits;
+    var targets = [], exports = [], i, end = 0, stage = 'preflight';
+    if (root.indexOf('/runs/') < 0 || !pf.exists) throw problem('INVALID_PLAN', 'Slice plan must exist inside runs');
+    pf.encoding = 'UTF8'; if (!pf.open('r')) throw problem('PLAN_READ_FAILED', 'Cannot read slice plan');
+    try { p = parseDataJSON(pf.read()); } finally { pf.close(); }
+    if (p.kind !== 'native-slices' || !p.slices || p.slices.length < 1 || p.slices.length > 200) throw problem('INVALID_PLAN', 'Unsupported slice plan');
+    var wf = workingFile(p.working);
+    if (canon(wf.parent) !== root) throw problem('INVALID_WORKING', 'Slice working copy must be beside plan');
+    var input = wf;
+    if (p.rasterSource) {
+        input = fileFor(p.rasterSource);
+        if (!input.exists || canon(input.parent) !== root || !/\.png$/i.test(input.name)) throw problem('INVALID_RASTER_SOURCE', 'Raster source must be a local PNG beside plan');
+    }
+    var paths = {};
+    function output(value, extension) {
+        if (!value) return null;
+        var f = outputFile(value, p.working, extension), key = canon(f);
+        if (paths[key]) throw problem('DUPLICATE_OUTPUT', 'Slice output paths must be unique');
+        if (key === canon(input)) throw problem('SOURCE_PROTECTED', 'Cannot overwrite the slice source');
+        paths[key] = true; return f;
+    }
+    function saveRaster(d, f, format) {
+        if (!f) return;
+        var o;
+        if (format === 'png') { o = new PNGSaveOptions(); o.compression = 6; }
+        else { o = new JPEGSaveOptions(); o.quality = 11; o.embedColorProfile = true; }
+        d.saveAs(f, o, true, Extension.LOWERCASE);
+        if (!f.exists || f.length <= 0) throw problem('EXPORT_MISSING', 'Photoshop did not produce a raster file');
+    }
+    for (i = 0; i < p.slices.length; i++) {
+        var s = p.slices[i];
+        if (s.x !== 0 || s.width !== p.width || s.y !== end || s.height <= 0 || s.y + s.height > p.height || Math.floor(s.y) !== s.y || Math.floor(s.height) !== s.height)
+            throw problem('INVALID_SLICE', 'Slices must cover full width without gaps, overlaps or resizing');
+        end = s.y + s.height;
+        targets.push({ s: s, png: output(s.png, 'png'), jpg: output(s.jpg, 'jpg') });
+        if (!s.png && !s.jpg) throw problem('INVALID_SLICE', 'Slice has no output');
+    }
+    if (end !== p.height) throw problem('INVALID_SLICE', 'Slices must include the full bottom margin');
+    for (i = 0; i < app.documents.length; i++) {
+        var openedPath = null; try { openedPath = app.documents[i].fullName; } catch (unsaved) {}
+        if (openedPath && canon(openedPath) === canon(input)) throw problem('DOCUMENT_ALREADY_OPEN', 'Slice source already open; inspect before retry');
+    }
+    try {
+        app.preferences.rulerUnits = Units.PIXELS; stage = 'open-working-copy';
+        doc = app.open(input); app.activeDocument = doc;
+        if (pixels(doc.width) !== p.width || pixels(doc.height) !== p.height) throw problem('DIMENSION_MISMATCH', 'PSD dimensions differ from the slice plan');
+        var profile = null; try { profile = doc.colorProfileName; } catch (untaggedProfile) {}
+        var source = { id: doc.id, path: doc.fullName.fsName, width: pixels(doc.width), height: pixels(doc.height), mode: String(doc.mode), profile: profile };
+        stage = 'merge-temporary-duplicate'; merged = doc.duplicate('native-four-product-source', true);
+        for (i = 0; i < targets.length; i++) {
+            var t = targets[i]; stage = 'slice-' + (i + 1); app.activeDocument = merged;
+            piece = merged.duplicate('native-four-product-' + (i + 1), true);
+            piece.crop([UnitValue(t.s.x, 'px'), UnitValue(t.s.y, 'px'), UnitValue(t.s.x + t.s.width, 'px'), UnitValue(t.s.y + t.s.height, 'px')]);
+            if (pixels(piece.width) !== t.s.width || pixels(piece.height) !== t.s.height) throw problem('CROP_MISMATCH', 'Native crop dimensions differ');
+            saveRaster(piece, t.png, 'png'); saveRaster(piece, t.jpg, 'jpg');
+            exports.push({ name: t.s.name, x: t.s.x, y: t.s.y, width: pixels(piece.width), height: pixels(piece.height), png: t.png ? t.png.fsName : null, jpg: t.jpg ? t.jpg.fsName : null });
+            piece.close(SaveOptions.DONOTSAVECHANGES); piece = null;
+        }
+        return { backend: 'real-com', kind: p.kind, name: p.name, source: source, sourceType: p.rasterSource ? 'verified-full-png' : 'working-psd', sourceSaved: false, sliceExports: exports };
+    } catch (e) {
+        throw problem(e.code || 'NATIVE_SLICE_FAILED', String(e.message || e), { stage: stage, completedSlices: exports, outcome: 'inspect-before-retry' });
+    } finally {
+        if (piece) try { piece.close(SaveOptions.DONOTSAVECHANGES); } catch (closePiece) {}
+        if (merged) try { merged.close(SaveOptions.DONOTSAVECHANGES); } catch (closeMerged) {}
+        if (doc) try { doc.close(SaveOptions.DONOTSAVECHANGES); } catch (closeDoc) {}
+        app.preferences.rulerUnits = oldRulers;
+        if (previous) try { app.activeDocument = previous; } catch (restoreActive) {}
+    }
+}

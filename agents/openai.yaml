@@ -1,0 +1,4 @@
+interface:
+  display_name: "Photoshop 电商设计执行"
+  short_description: "从只读需求表到真实 Photoshop 分层设计、场次变体与切片交付"
+  default_prompt: "使用 $photoshop-commerce-design 读取设计需求、核对授权素材并通过真实 Photoshop 制作可编辑设计，保留操作回执与预览。"

@@ -1,0 +1,12 @@
+{
+  "port": 57123,
+  "allowedInputRoots": [
+    "assets-in"
+  ],
+  "workbookRoots": [
+    "inputs",
+    "examples/generated"
+  ],
+  "outputRoot": "runs",
+  "commandTimeoutMs": 90000
+}

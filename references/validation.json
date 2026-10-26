@@ -1,0 +1,35 @@
+{
+  "date": "2026-10-26",
+  "skillStructure": "passed",
+  "runtimeDependencyInstall": "npm ci passed in an isolated copy",
+  "nodeTests": {
+    "passed": 102,
+    "failed": 0
+  },
+  "pythonTests": {
+    "passed": 7,
+    "failed": 0
+  },
+  "typecheck": "passed",
+  "build": "passed",
+  "mcpSmoke": {
+    "httpBridge": "passed",
+    "stdioHandshake": "passed",
+    "tools": 24,
+    "photoshopConnected": false,
+    "photoshopExecuted": false
+  },
+  "realWorkbookReadOnlyCheck": {
+    "sheets": 9,
+    "semanticChanges": 16,
+    "sourceHashUnchanged": true
+  },
+  "probePlan": {
+    "offlineValidation": "passed",
+    "psdCreated": false,
+    "photoshopCalled": false
+  },
+  "photoshopExecutedThisSkillCreation": false,
+  "historicalRealComEvidence": "See double11-case.md; not a new device verification",
+  "uxpRealExecutionVerified": false
+}

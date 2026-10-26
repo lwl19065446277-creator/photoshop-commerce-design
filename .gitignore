@@ -1,0 +1,10 @@
+**/node_modules/
+**/dist/
+**/.studio/
+**/__pycache__/
+*.pyc
+*.log
+*.psd
+*.psb
+*.xlsx
+*.zip

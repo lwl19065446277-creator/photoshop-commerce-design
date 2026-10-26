@@ -1,0 +1,26 @@
+{
+  "id": "example-needs-real-assets",
+  "source": {
+    "workbook": "examples/generated/requirements.xlsx",
+    "sheet": "示例需求",
+    "row": 2
+  },
+  "status": "needs_input",
+  "issues": [
+    {
+      "code": "EXAMPLE_PLACEHOLDER",
+      "severity": "error",
+      "message": "这是一条合成示例。工作表中的路径一律忽略；请仅从用户指定素材目录在表格外绑定真实文件，确认文案、尺寸及图层后重新解析，禁止直接执行。"
+    }
+  ],
+  "productName": "演示商品（非真实业务）",
+  "sku": "EXAMPLE-001",
+  "title": "示例主标题（请替换）",
+  "width": 1000,
+  "height": 1000,
+  "templatePath": "./template.psd",
+  "productImagePath": "./product.png",
+  "titleLayer": "主标题",
+  "productLayer": "商品智能对象",
+  "outputName": "example-only"
+}

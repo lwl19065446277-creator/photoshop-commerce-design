@@ -1,0 +1,71 @@
+/* Edits copies of native catalog groups; JSON is data only. ES3. */
+function renderNativeCatalog(planPath){
+ var pf=fileFor(planPath),root=canon(pf.parent),p,doc=null,oldRulers=app.preferences.rulerUnits,oldType=app.preferences.typeUnits,records=[],slices=[],i,stage='preflight';
+ if(root.indexOf('/runs/')<0||!pf.exists)throw problem('INVALID_PLAN','Native plan must exist inside runs');pf.encoding='UTF8';pf.open('r');try{p=parseDataJSON(pf.read());}finally{pf.close();}
+ function output(path){var f=fileFor(path);if(canon(f.parent)!==root||f.exists)throw problem('INVALID_OUTPUT','Native outputs must be new siblings');return f;}
+ function desc(l){var r=new ActionReference();r.putIdentifier(charIDToTypeID('Lyr '),l.id);return executeActionGet(r);}
+ function nativeLayer(layerId,documentOverride){var d=documentOverride||doc;app.activeDocument=d;var action=new ActionDescriptor(),r=new ActionReference();r.putIdentifier(charIDToTypeID('Lyr '),layerId);action.putReference(charIDToTypeID('null'),r);action.putBoolean(charIDToTypeID('MkVs'),false);executeAction(charIDToTypeID('slct'),action,DialogModes.NO);var l=d.activeLayer;if(l.id!==layerId||app.activeDocument.id!==d.id)throw problem('LAYER_ID_MISMATCH','Direct native ID lookup selected the wrong layer');return l;}
+ function bounds(l){var d=desc(l),b=d.getObjectValue(stringIDToTypeID('boundsNoEffects'));return[b.getUnitDoubleValue(stringIDToTypeID('left')),b.getUnitDoubleValue(stringIDToTypeID('top')),b.getUnitDoubleValue(stringIDToTypeID('right')),b.getUnitDoubleValue(stringIDToTypeID('bottom'))];}
+ function flat(ls){var a=[],j;for(j=0;j<ls.length;j++){a.push(ls[j]);if(ls[j].typename==='LayerSet')a=a.concat(flat(ls[j].layers));}return a;}
+ function progress(o){var f=new File(pf.parent.fsName+'/native-progress.jsonl');f.encoding='UTF8';f.open('a');try{f.writeln(json(o));}finally{f.close();}}
+ function recolor(l){
+  var fxKey=stringIDToTypeID('layerEffects'),gKey=stringIDToTypeID('gradientFill'),gradKey=stringIDToTypeID('gradient'),colorsKey=stringIDToTypeID('colors'),d=desc(l);
+  if(!d.hasKey(fxKey))throw problem('GRADIENT_MISSING','Native price box has no effects');var fx=d.getObjectValue(fxKey),before=descriptorData(fx),g=fx.getObjectValue(gKey),grad=g.getObjectValue(gradKey),stops=grad.getList(colorsKey),newStops=new ActionList(),j;
+  if(stops.count<2||stops.count>16||!g.getBoolean(stringIDToTypeID('enabled')))throw problem('UNEXPECTED_GRADIENT','Expected enabled native gradient with 2-16 color stops');
+  for(j=0;j<stops.count;j++){var stop=stops.getObjectValue(j),rgb=new ActionDescriptor(),mix=stop.getInteger(stringIDToTypeID('location'))/4096,channels=['Rd  ','Grn ','Bl  '],ci;for(ci=0;ci<3;ci++){var start=parseInt(p.gradient[0].substr(ci*2,2),16),end=parseInt(p.gradient[1].substr(ci*2,2),16);rgb.putDouble(charIDToTypeID(channels[ci]),start+(end-start)*mix);}stop.putObject(stringIDToTypeID('color'),stringIDToTypeID('RGBColor'),rgb);newStops.putObject(stops.getObjectType(j),stop);}
+  grad.putList(colorsKey,newStops);g.putObject(gradKey,stringIDToTypeID('gradientClassEvent'),grad);fx.putObject(gKey,stringIDToTypeID('gradientFill'),g);
+  var set=new ActionDescriptor(),r=new ActionReference();r.putProperty(charIDToTypeID('Prpr'),fxKey);r.putIdentifier(charIDToTypeID('Lyr '),l.id);set.putReference(charIDToTypeID('null'),r);set.putObject(charIDToTypeID('T   '),fxKey,fx);executeAction(charIDToTypeID('setd'),set,DialogModes.NO);
+  var after=descriptorData(desc(l).getObjectValue(fxKey)),beforeColors=parseDataJSON(json(before.gradientFill.value.gradient.value.colors)),afterColors=parseDataJSON(json(after.gradientFill.value.gradient.value.colors));
+  // All style parameters except the two RGB colors must be identical.
+  for(j=0;j<stops.count;j++){before.gradientFill.value.gradient.value.colors[j].value.color=null;after.gradientFill.value.gradient.value.colors[j].value.color=null;}
+  // Photoshop localizes the display label of disabled contour presets on set.
+  // Actual contour curve data, stops, opacity, direction and all other values stay checked.
+  function normalizeLabels(o){var k;if(!o||typeof o!=='object')return;for(k in o)if(o.hasOwnProperty(k)){if(k==='transferSpec'&&o.enabled===false&&o[k].value&&o[k].value.name!==undefined)o[k].value.name='<contour-display-label>';normalizeLabels(o[k]);}}
+  normalizeLabels(before);normalizeLabels(after);if(json(before)!==json(after))throw problem('STYLE_CHANGED','Non-color native effect properties changed');
+  return{layerId:l.id,beforeColors:beforeColors,afterColors:afterColors,otherEffectPropertiesUnchanged:true,contourDisplayLabelNormalizationIgnored:true};
+ }
+ function saveRaster(d,f,format){var o;if(format==='png'){o=new PNGSaveOptions();o.compression=6;}else{o=new JPEGSaveOptions();o.quality=11;o.embedColorProfile=true;}d.saveAs(f,o,true,Extension.LOWERCASE);}
+ try{
+  if(p.kind!=='native-catalog'||!p.items||p.items.length>60)throw problem('INVALID_PLAN','Unsupported native catalog plan');var wf=workingFile(p.working);if(canon(wf.parent)!==root)throw problem('INVALID_WORKING','Working copy must be beside native plan');
+  var psd=output(p.psd),png=output(p.png),jpg=output(p.jpg),targets=[];for(i=0;i<p.slices.length;i++){var s=p.slices[i];if(s.x<0||s.y<0||s.x+s.width>p.width||s.y+s.height>p.height)throw problem('INVALID_SLICE','Native slice exceeds canvas');targets.push({s:s,png:s.png?output(s.png):null,jpg:s.jpg?output(s.jpg):null});}
+  for(i=0;i<app.documents.length;i++){var q=null;try{q=app.documents[i].fullName;}catch(e){}if(q&&canon(q)===canon(wf))throw problem('DOCUMENT_ALREADY_OPEN','Native working copy already open; inspect before retry');}
+  for(i=0;i<p.items.length;i++){var a=fileFor(p.items[i].path);if(canon(a).indexOf('/runs/')<0||!a.exists)throw problem('ASSET_MISSING','Only staged run images supported');}
+  app.preferences.rulerUnits=Units.PIXELS;app.preferences.typeUnits=TypeUnits.PIXELS;doc=app.open(wf);app.activeDocument=doc;if(pixels(doc.width)!==p.width)throw problem('WIDTH_MISMATCH','Native width changed');
+  var template=nativeLayer(p.templateGroupId);if(!template||template.typename!=='LayerSet')throw problem('TEMPLATE_MISSING','Native group absent');var original=snapshot(doc,[template]);original.scope='canonical-native-product-group';
+  for(i=0;i<p.hideGroupIds.length;i++){var h=nativeLayer(p.hideGroupIds[i]);if(!h)throw problem('GROUP_MISSING','Expected original group absent');h.visible=false;}
+  if(pixels(doc.height)!==p.height)doc.resizeCanvas(UnitValue(p.width,'px'),UnitValue(p.height,'px'),AnchorPosition.TOPCENTER);
+  var outGroup=doc.layerSets.add();outGroup.name='CATALOG_NATIVE_UPDATED';var outGroupId=outGroup.id;progress({phase:'start',name:p.name,items:p.items.length});
+  var historyError=null;
+  // Static callback only: requirement text never becomes an executable string.
+  // One native history entry avoids regenerating every card's history preview.
+  $.global._studioNativeCatalogHistory=function(){try{for(i=0;i<p.items.length;i++){
+   // Reacquire by stable IDs after insertion; direct native selection avoids
+   // traversing the original document's many hidden backup layers each time.
+   stage='duplicate';var item=p.items[i];template=nativeLayer(p.templateGroupId);outGroup=nativeLayer(outGroupId);doc.activeLayer=template;var g=template.duplicate(outGroup,ElementPlacement.PLACEBEFORE);if(g.id===p.templateGroupId)throw problem('DUPLICATE_ID_COLLISION','Native duplicate must have a new ID');stage='duplicate-visibility';g.visible=true;g.name=('0'+(i+1)).slice(-2)+'_'+item.id+'_'+item.sku;var ls=flat(g.layers),sale=null,orig=null,saving=null,currency=null,priceBox=null,images=[],j;
+   for(j=0;j<ls.length;j++){var l=ls[j];if(l.typename==='ArtLayer'&&l.kind===LayerKind.TEXT){var txt=l.textItem.contents;if(/^\s*\d+\s*$/.test(txt))sale=l;else if(/^[\uffe5\u00a5]\s*\d+/.test(txt))orig=l;else if(/^\u7acb\u7701\s*\d+/.test(txt))saving=l;else if(/^[\u00a5\uffe5]$/.test(txt))currency=l;}if(l.typename==='ArtLayer'&&l.kind===LayerKind.SMARTOBJECT&&/^(1440|800)-1/.test(l.name))images.push(l);if(l.typename==='ArtLayer'&&l.name.indexOf('\u77e9\u5f62 574')===0)priceBox=l;}
+   if(!sale||!orig||!saving||!currency||!priceBox||!images.length)throw problem('NATIVE_STRUCTURE_MISMATCH','Expected native price/image layers missing',{item:item.id});
+   stage='bounds';var imageLayer=images[0],imageBounds=bounds(imageLayer),oldSale=bounds(sale),oldOrig=bounds(orig),oldCurrency=bounds(currency),clusterCenter=(oldCurrency[0]+oldOrig[2])/2,gap=Math.max(oldOrig[0]-oldSale[2],10*p.width/1440),currencyGap=Math.max(oldSale[0]-oldCurrency[2],3*p.width/1440);
+   var originals={sale:sale.textItem.contents,original:orig.textItem.contents,saving:saving.textItem.contents},fonts={sale:sale.textItem.font,original:orig.textItem.font,saving:saving.textItem.font},groupId=g.id,saleId=sale.id,origId=orig.id,savingId=saving.id,priceBoxId=priceBox.id,oldImageId=imageLayer.id,wasGrouped=imageLayer.grouped;
+   stage='text';sale.textItem.contents=String(item.price);orig.textItem.contents='\uffe5'+item.originalPrice;saving.textItem.contents='\u7acb\u7701 '+item.saving;
+   stage='price-position';var sb=bounds(sale),ob=bounds(orig),cb=bounds(currency);currency.translate(UnitValue(sb[0]-currencyGap-cb[2],'px'),UnitValue(0,'px'));orig.translate(UnitValue(sb[2]+gap-ob[0],'px'),UnitValue(0,'px'));cb=bounds(currency);ob=bounds(orig);var dx=clusterCenter-(cb[0]+ob[2])/2;currency.translate(UnitValue(dx,'px'),UnitValue(0,'px'));sale.translate(UnitValue(dx,'px'),UnitValue(0,'px'));orig.translate(UnitValue(dx,'px'),UnitValue(0,'px'));
+   var gradient;
+   // A fresh embedded object prevents shared Smart Object definitions in the
+   // original PSD from propagating an image replacement to other cards.
+   for(j=0;j<images.length;j++)images[j].visible=false;
+   stage='embed-independent-image';var assetDoc=null,addedId;try{assetDoc=app.open(fileFor(item.path));if(assetDoc.layers.length>1)assetDoc.flatten();var added=assetDoc.activeLayer.duplicate(doc,ElementPlacement.PLACEATBEGINNING);addedId=added.id;}finally{if(assetDoc)assetDoc.close(SaveOptions.DONOTSAVECHANGES);app.activeDocument=doc;}
+   doc.activeLayer=nativeLayer(addedId);executeAction(stringIDToTypeID('newPlacedLayer'),undefined,DialogModes.NO);imageLayer=doc.activeLayer;var imageId=imageLayer.id;
+   stage='image-transform';var ib=bounds(imageLayer),scale=(imageBounds[2]-imageBounds[0])/(ib[2]-ib[0])*100;imageLayer.resize(scale,scale,AnchorPosition.MIDDLECENTER);ib=bounds(imageLayer);imageLayer.translate(UnitValue(imageBounds[0]-ib[0],'px'),UnitValue(imageBounds[1]-ib[1],'px'));imageLayer.move(nativeLayer(oldImageId),ElementPlacement.PLACEBEFORE);imageLayer=nativeLayer(imageId);imageLayer.grouped=wasGrouped;imageLayer.name='GRAY_LOGO_'+item.id;imageLayer.visible=true;
+   var col=i%2,row=Math.floor(i/2);stage='group-position';g=nativeLayer(groupId);g.translate(UnitValue(col*p.columnStep,'px'),UnitValue(row*p.rowStep,'px'));sale=nativeLayer(saleId);orig=nativeLayer(origId);saving=nativeLayer(savingId);imageLayer=nativeLayer(imageId);
+   stage='gradient';gradient=recolor(nativeLayer(priceBoxId));
+   if(sale.textItem.contents!==String(item.price)||orig.textItem.contents!=='\uffe5'+item.originalPrice||saving.textItem.contents!=='\u7acb\u7701 '+item.saving||sale.textItem.font!==fonts.sale||orig.textItem.font!==fonts.original||saving.textItem.font!==fonts.saving)throw problem('READBACK_MISMATCH','Native text or fonts differ');
+   var rec={position:i+1,id:item.id,sku:item.sku,groupId:g.id,imageId:imageLayer.id,imageSource:item.path,imageSha256:item.sha256,originalTexts:originals,price:item.price,originalPrice:item.originalPrice,saving:item.saving,fonts:fonts,gradient:gradient,layers:layerInfo(g,doc.id)};records.push(rec);progress({phase:'item',position:i+1,id:item.id});
+  }}catch(updateError){historyError=updateError;}};
+  try{doc.suspendHistory('Design Agent native catalog','$.global._studioNativeCatalogHistory()');}finally{$.global._studioNativeCatalogHistory=undefined;}
+  if(historyError)throw historyError;if(records.length!==p.items.length)throw problem('HISTORY_CALLBACK_INCOMPLETE','Native history callback did not complete');
+  var opts=new PhotoshopSaveOptions();opts.layers=true;opts.embedColorProfile=true;opts.maximizeCompatibility=true;app.preferences.maximizeCompatibility=QueryStateType.ALWAYS;doc.saveAs(psd,opts,false,Extension.LOWERCASE);saveRaster(doc,png,'png');saveRaster(doc,jpg,'jpg');progress({phase:'full_exports'});
+  // Merge once, then crop small disposable duplicates for native slices.
+  var merged=doc.duplicate('native-slice-source',true);try{for(i=0;i<targets.length;i++){var t=targets[i],sd=null;try{app.activeDocument=merged;sd=merged.duplicate('native-slice-'+i,true);sd.crop([UnitValue(t.s.x,'px'),UnitValue(t.s.y,'px'),UnitValue(t.s.x+t.s.width,'px'),UnitValue(t.s.y+t.s.height,'px')]);if(t.png)saveRaster(sd,t.png,'png');if(t.jpg)saveRaster(sd,t.jpg,'jpg');slices.push({name:t.s.name,x:t.s.x,y:t.s.y,width:pixels(sd.width),height:pixels(sd.height),png:t.png?t.png.fsName:null,jpg:t.jpg?t.jpg.fsName:null});}finally{if(sd)sd.close(SaveOptions.DONOTSAVECHANGES);}progress({phase:'slice',position:i+1,total:targets.length});}}finally{merged.close(SaveOptions.DONOTSAVECHANGES);app.activeDocument=doc;}
+  var updated=[];for(i=0;i<records.length;i++)updated.push(nativeLayer(records[i].groupId));var finalAudit=auditDocument(doc,updated);finalAudit.scope='updated-product-groups';doc.close(SaveOptions.DONOTSAVECHANGES);doc=null;var reopened=app.open(psd),reopenedGroups=[];for(i=0;i<records.length;i++)reopenedGroups.push(nativeLayer(records[i].groupId,reopened));var reopen=snapshot(reopened,reopenedGroups);reopen.scope='updated-product-groups';reopened.close(SaveOptions.DONOTSAVECHANGES);progress({phase:'complete',reopenedId:reopen.id});return{backend:'real-com',kind:p.kind,name:p.name,psd:psd.fsName,png:png.fsName,jpg:jpg.fsName,width:p.width,height:p.height,sourceSnapshot:original,steps:records,audit:finalAudit,reopen:reopen,sliceExports:slices};
+ }catch(e){e.details=e.details||{};e.details.stage=stage;e.details.line=e.line;e.details.number=e.number;if(doc){e.details.partialDocumentId=doc.id;e.details.itemIndex=i;}throw e;}
+ finally{app.preferences.rulerUnits=oldRulers;app.preferences.typeUnits=oldType;}
+}

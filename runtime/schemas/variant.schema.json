@@ -1,0 +1,230 @@
+{
+  "$ref": "#/definitions/NativeVariant",
+  "definitions": {
+    "NativeVariant": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "const": "native-variant"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "working": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sourceSha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "width": {
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "maximum": 30000
+        },
+        "height": {
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "maximum": 30000
+        },
+        "psd": {
+          "type": "string"
+        },
+        "png": {
+          "type": "string"
+        },
+        "jpg": {
+          "type": "string"
+        },
+        "visibility": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "exclusiveMinimum": 0
+              },
+              "name": {
+                "type": "string"
+              },
+              "visible": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "id",
+              "name",
+              "visible"
+            ],
+            "additionalProperties": false
+          },
+          "maxItems": 50
+        },
+        "texts": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "$ref": "#/definitions/NativeVariant/properties/visibility/items/properties/id"
+              },
+              "expected": {
+                "type": "string"
+              },
+              "text": {
+                "type": "string",
+                "maxLength": 10000
+              },
+              "fit": {
+                "type": "array",
+                "minItems": 4,
+                "maxItems": 4,
+                "items": [
+                  {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  {
+                    "type": "integer",
+                    "exclusiveMinimum": 0
+                  },
+                  {
+                    "type": "integer",
+                    "exclusiveMinimum": 0
+                  }
+                ]
+              },
+              "autoLeading": {
+                "type": "boolean",
+                "const": true
+              },
+              "color": {
+                "type": "string",
+                "pattern": "^[a-f0-9]{6}$"
+              },
+              "emphasis": {
+                "type": "object",
+                "properties": {
+                  "text": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "color": {
+                    "type": "string",
+                    "pattern": "^[a-f0-9]{6}$"
+                  }
+                },
+                "required": [
+                  "text",
+                  "color"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "required": [
+              "id",
+              "expected",
+              "text"
+            ],
+            "additionalProperties": false
+          },
+          "maxItems": 50
+        },
+        "overlay": {
+          "type": "object",
+          "properties": {
+            "path": {
+              "type": "string"
+            },
+            "sha256": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            "box": {
+              "type": "array",
+              "minItems": 4,
+              "maxItems": 4,
+              "items": [
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "number",
+                  "exclusiveMinimum": 0
+                },
+                {
+                  "type": "number",
+                  "exclusiveMinimum": 0
+                }
+              ]
+            },
+            "name": {
+              "type": "string",
+              "minLength": 1
+            },
+            "aboveLayerId": {
+              "$ref": "#/definitions/NativeVariant/properties/visibility/items/properties/id"
+            }
+          },
+          "required": [
+            "path",
+            "sha256",
+            "box",
+            "name",
+            "aboveLayerId"
+          ],
+          "additionalProperties": false
+        },
+        "crop": {
+          "$ref": "#/definitions/NativeVariant/properties/texts/items/properties/fit"
+        },
+        "sourceCells": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "sheet": {
+                "type": "string"
+              },
+              "cell": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "sheet",
+              "cell"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "kind",
+        "name",
+        "working",
+        "sourceSha256",
+        "width",
+        "height",
+        "psd",
+        "png",
+        "jpg",
+        "visibility",
+        "texts",
+        "sourceCells"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}

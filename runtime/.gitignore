@@ -1,0 +1,7 @@
+node_modules/
+dist/
+.studio/
+runs/
+inputs/
+assets-in/
+__pycache__/

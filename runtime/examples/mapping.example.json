@@ -1,0 +1,21 @@
+{
+  "sheetName": "示例需求",
+  "mapping": {
+    "productName": "商品名称",
+    "sku": "商品编号",
+    "title": "主标题",
+    "width": "宽度",
+    "height": "高度",
+    "templatePath": "PSD路径",
+    "productImagePath": "商品图路径",
+    "outputName": "输出文件名"
+  },
+  "defaults": {
+    "titleLayer": "主标题",
+    "productLayer": "商品智能对象"
+  },
+  "assetBindings": {
+    "templatePath": "./template.psd",
+    "productImagePath": "./product.png"
+  }
+}

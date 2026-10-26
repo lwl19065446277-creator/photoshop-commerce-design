@@ -1,0 +1,39 @@
+{
+  "name": "design-agent-studio",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Portable Photoshop commerce design runtime; real COM and optional UXP, no production mock",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc --noEmit",
+    "test": "tsx --test tests/*.test.ts uxp-plugin/*.test.cjs",
+    "start": "node dist/src/cli.js bridge",
+    "studio": "tsx src/cli.ts",
+    "mcp": "node dist/src/mcp.js",
+    "create-examples": "tsx scripts/create-example.ts",
+    "schemas": "tsx scripts/generate-schemas.ts",
+    "smoke": "tsx scripts/smoke-local.ts",
+    "com": "tsx scripts/com.ts",
+    "validate-plan": "tsx scripts/validate-plan.ts"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.28.0",
+    "exceljs": "^4.4.0",
+    "zod": "^3.25.76",
+    "zod-to-json-schema": "^3.25.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "tsx": "^4.20.0",
+    "typescript": "^5.9.0"
+  },
+  "overrides": {
+    "exceljs": {
+      "uuid": "11.1.1"
+    }
+  }
+}
